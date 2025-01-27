@@ -8,6 +8,10 @@ With this plugin, you can easily find and publish books and interactive simulato
 
 To use the plugin, you will need to specify the "Company ID" and "Contract Name" when configuring it. You can receive them by sending an email to your email address plagin@geotar.ru
 
+[More documentation on this plugin](https://www.studentlibrary.ru/ru/pages/plagin.html)
+[Website URL](https://www.studentlibrary.ru/ru/pages/plagin.html)
+[Moodle Plugins directory](https://moodle.org/plugins/mod_studentlibrary)
+
 ## License ##
 
 2025 <plagin@geotar.ru>
