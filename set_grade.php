@@ -26,21 +26,25 @@
 // Get data. Получение данных.
 require_once(__DIR__ . '/../../config.php');
 global $DB, $CFG;
-if (isset($_GET['apikey'])) {
+$apikey = required_param('apikey', PARAM_TEXT);
+$total = required_param('total', PARAM_INT);
+$score = required_param('score', PARAM_INT);
+$report = required_param('report', PARAM_URL);
+if (isset($apikey)) {
     // Checking that the key is in the database. Проверяю что ключ есть в базе.
-    $apikeyexists = $DB->record_exists('studentlibrary_apikey', ['apikey' => $_GET['apikey']]);
+    $apikeyexists = $DB->record_exists('studentlibrary_apikey', ['apikey' => $apikey]);
     if ($apikeyexists) {
-        $apikeydata = $DB->get_record('studentlibrary_apikey', ['apikey' => $_GET['apikey']], '*', MUST_EXIST);
+        $apikeydata = $DB->get_record('studentlibrary_apikey', ['apikey' => $apikey], '*', MUST_EXIST);
         $result = new stdClass();
         $result->course = $apikeydata->course;
         $result->module = $apikeydata->module;
         $result->userid = $apikeydata->user;
-        $result->total = $_GET['total'];
-        $result->score = $_GET['score'];
-        $result->report = $_GET['report'];
+        $result->total = $total;
+        $result->score = $score;
+        $result->report = $report;
         $result->modified = time();
         $lastinsertid = $DB->insert_record('studentlibrary_results', $result, false);
-        $DB->delete_records('studentlibrary_apikey', ['apikey' => $_GET['apikey']], '*', MUST_EXIST);
+        $DB->delete_records('studentlibrary_apikey', ['apikey' => $apikey], '*', MUST_EXIST);
         echo('{"status":"ok"}');
         $cm = get_coursemodule_from_id('studentlibrary', $apikeydata->module, 0, false, MUST_EXIST);
         $course = $DB->get_record('course', ['id' => $apikeydata->course], '*', MUST_EXIST);
