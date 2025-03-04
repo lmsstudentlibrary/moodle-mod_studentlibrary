@@ -99,6 +99,10 @@ class mod_studentlibrary_mod_form extends moodleform_mod {
             get_string('studentlibrary:search_bar', 'mod_studentlibrary'),
             get_string('studentlibrary:link_to_the_kit', 'mod_studentlibrary'),
             $lang,
+            get_string('studentlibrary:id_error_booke_not_faind', 'mod_studentlibrary'),
+            get_string('studentlibrary:id_error_booke', 'mod_studentlibrary'),
+            get_string('studentlibrary:placeholder_s', 'mod_studentlibrary'),
+
         ]);
         $courseid = optional_param('course', 0, PARAM_INT);
         $section = optional_param('section', 0, PARAM_INT);
