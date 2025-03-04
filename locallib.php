@@ -15,20 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
-* Plugin administration pages are defined here.
-*
-* @package     mod_studentlibrary
-* @category    admin
-* @copyright   2025 <plagin@geotar.ru>
-* @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-*/
-
-/**
-* Viewing a book.
-*
-* @param string $book Book id.
-* @return string Retutn context book page.
-*/
+ * Plugin administration pages are defined here.
+ *
+ * @package     mod_studentlibrary
+ * @category    admin
+ * @copyright   2025 <plagin@geotar.ru>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+ 
+ /**
+ * Viewing a book.
+ *
+ * @param string $book Book id.
+ * @return string Retutn context book page.
+ */
 function get_lib_url($book) {
     global $CFG, $DB, $USER, $PAGE,  $SESSION;
     require_once($CFG->dirroot.'/lib/filelib.php');
@@ -150,14 +150,14 @@ function get_lib_url($book) {
 }
 
 /**
-* Build book page.
-*
-* @param string $server url server.
-* @param string $ssr user ssr.
-* @param string $bookid Book id.
-* @param string $url api url.
-* @return string Retutn context book card.
-*/
+ * Build book page.
+ *
+ * @param string $server url server.
+ * @param string $ssr user ssr.
+ * @param string $bookid Book id.
+ * @param string $url api url.
+ * @return string Retutn context book card.
+ */
 function buildbook($server, $ssr, $bookid, $url) {
     global $CFG, $SESSION;
     require_once($CFG->dirroot . '/course/moodleform_mod.php');
@@ -287,12 +287,12 @@ function buildbook($server, $ssr, $bookid, $url) {
 }
 
 /**
-* Getting a list of publishers
-* @param string $ssr user ssr.
-* @param string $getpublisherurl url API.
-* @param string $server server url.
-* @return string Retutn publishers name.
-*/
+ * Getting a list of publishers
+ * @param string $ssr user ssr.
+ * @param string $getpublisherurl url API.
+ * @param string $server server url.
+ * @return string Retutn publishers name.
+ */
 function getpublisher($ssr, $getpublisherurl, $server) {
     $getpublisherurl = $server . 'db?SSr=' . $ssr . '&guide=publishers&cmd=data&id=';
     $getpublisherurl .= $getpublisherurl . '&build_in_data=1&on_cdata=0';
@@ -314,12 +314,12 @@ function getpublisher($ssr, $getpublisherurl, $server) {
     return ($publishers);
 }
 /**
-* Getting book Id by docId.
-* @param string $ssr user ssr.
-* @param string $bookid book chapter id.
-* @param string $server server url.
-* @return string Retutn publishers name.
-*/
+ * Getting book Id by docId.
+ * @param string $ssr user ssr.
+ * @param string $bookid book chapter id.
+ * @param string $server server url.
+ * @return string Retutn publishers name.
+ */
 function getbookidbydocid($server, $ssr, $bookid) {
     $masterbookdataurl = $server . 'db?SSr=' . $ssr . '&guide=doc&cmd=data&id=' . $bookid . '&tag=master_book_data';
     $curl = new curl();
@@ -334,12 +334,12 @@ function getbookidbydocid($server, $ssr, $bookid) {
 }
 
 /**
-* Getting an organization session id.
-* @param string $agrid arg id.
-* @param string $orgid org id.
-* @param string $serverapi server url.
-* @return string Retutn organization session id.
-*/
+ * Getting an organization session id.
+ * @param string $agrid arg id.
+ * @param string $orgid org id.
+ * @param string $serverapi server url.
+ * @return string Retutn organization session id.
+ */
 function getssro($serverapi, $orgid, $agrid) {
     // We get the organization's session. Получаем сессию организации.
     $getsesionurl = $serverapi . "join?org_id=" . $orgid . "&agr_id=" . $agrid . "&app=plugin_moodle";
@@ -353,14 +353,14 @@ function getssro($serverapi, $orgid, $agrid) {
 }
 
 /**
-* Getting an personal session id.
-* @param string $serverapi serverapi.
-* @param string $ssro ssro.
-* @param string $userid userid.
-* @param string $userlastname userlastname.
-* @param string $userfirstname userfirstname.
-* @return string Retutn personal session id.
-*/
+ * Getting an personal session id.
+ * @param string $serverapi serverapi.
+ * @param string $ssro ssro.
+ * @param string $userid userid.
+ * @param string $userlastname userlastname.
+ * @param string $userfirstname userfirstname.
+ * @return string Retutn personal session id.
+ */
 function getssrp($serverapi, $ssro, $userid, $userlastname, $userfirstname) {
     // Getting the user's session. Получаем сессию пользователя.
     $getsesionurl = $serverapi . "db?SSr=" . $ssro . "&guide=session&cmd=solve&action=seamless_access&id=";
@@ -375,11 +375,11 @@ function getssrp($serverapi, $ssro, $userid, $userlastname, $userfirstname) {
 }
 
 /**
-* Getting kits list.
-* @param string $serverapi serverapi.
-* @param string $ssrp ssrp.
-* @return array Retutn kits list.
-*/
+ * Getting kits list.
+ * @param string $serverapi serverapi.
+ * @param string $ssrp ssrp.
+ * @return array Retutn kits list.
+ */
 function getkitslist($serverapi, $ssrp) {
     // We get a set of books. Получаем список книг.
     $kitsurl = $serverapi . "db?SSr=" . $ssrp . "&guide=sengine&cmd=sel&tag=all_agreement_kits";
@@ -398,14 +398,14 @@ function getkitslist($serverapi, $ssrp) {
 }
 
 /**
-* Building a switch kit.
-* @param string $server server.
-* @param string $ssr ssr.
-* @param string $kitid kit id.
-* @param string $url url.
-* @param string $lang lang.
-* @return string Retutn switch kit.
-*/
+ * Building a switch kit.
+ * @param string $server server.
+ * @param string $ssr ssr.
+ * @param string $kitid kit id.
+ * @param string $url url.
+ * @param string $lang lang.
+ * @return string Retutn switch kit.
+ */
 function buildswitchkit($server, $ssr, $kitid, $url, $lang) {
     // We get a set of books. Получаем список книг.
     $kitdataurl = $server . "db?SSr=" . $ssr . "&guide=sengine&cmd=sel&tag=kit_content&kit=" . $kitid;
