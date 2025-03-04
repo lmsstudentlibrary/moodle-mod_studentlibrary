@@ -12,6 +12,9 @@ export const init = (
     , search_bar
     , add_button_kit_string
     , lang
+    , id_error_booke_not_faind_s
+    , id_error_booke_s
+    , placeholder_s
 ) => {
     $('#search_button').on("click", function () {
         // Удаляем артефакты
@@ -82,7 +85,7 @@ export const init = (
         });
         search_form_filter.appendChild(addkit);
         let input_book_search = Y.Node.create(
-            '<div><p>' + search_bar + '</p><input type="text" id="input_book_search" class="input_book_search custom-select" placeholder="Реанимация, Пропедевтика"></div>'
+            '<div><p>' + search_bar + '</p><input type="text" id="input_book_search" class="input_book_search custom-select" placeholder="' + placeholder_s + '"></div>'
         );
         search_form.appendChild(input_book_search);
         let button_book_search = Y.Node.create('<button type="button" id="button_book_search" class="button_book_search btn btn-outline-primary">' + search_button + '</button>');
@@ -149,7 +152,7 @@ export const init = (
                 window.console.log('book_id ok');
             } else {
                 window.console.log('book_id no');
-                id_error_booke.innerHTML = 'Такой идентификатор не найден';
+                id_error_booke.innerHTML = id_error_booke_not_faind_s;
                 id_error_booke.style.display = "block";
             }
         } else if (book_id_text.indexOf('/book/') >= 0) {
@@ -159,7 +162,7 @@ export const init = (
                 window.console.log('book_id ok');
             } else {
                 window.console.log('book_id no');
-                id_error_booke.innerHTML = 'Такой идентификатор не найден';
+                id_error_booke.innerHTML = id_error_booke_not_faind_s;
                 id_error_booke.style.display = "block";
             }
         } else if (book_id_text.indexOf('doc/') === 0) {
@@ -169,7 +172,7 @@ export const init = (
                 window.console.log('book_id ok');
             } else {
                 window.console.log('book_id no');
-                id_error_booke.innerHTML = 'Такой идентификатор не найден';
+                id_error_booke.innerHTML = id_error_booke_not_faind_s;
                 id_error_booke.style.display = "block";
             }
         } else if (book_id_text.indexOf('book/') === 0) {
@@ -179,11 +182,11 @@ export const init = (
                 window.console.log('book_id ok');
             } else {
                 window.console.log('book_id no');
-                id_error_booke.innerHTML = 'Такой идентификатор не найден';
+                id_error_booke.innerHTML = id_error_booke_not_faind_s;
                 id_error_booke.style.display = "block";
             }
         } else {
-            id_error_booke.innerHTML = 'Не верный идентификатор книги';
+            id_error_booke.innerHTML = id_error_booke_s;
             id_error_booke.style.display = "block";
         }
     });
