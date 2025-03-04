@@ -73,7 +73,7 @@ class mod_studentlibrary_mod_form extends moodleform_mod {
         }
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->addHelpButton('name', 'studentlibraryname', 'mod_studentlibrary');
+        $mform->addHelpButton('name', 'studentlibrary:studentlibraryname', 'mod_studentlibrary');
         if ($CFG->branch >= 29) {
             $this->standard_intro_elements();
         } else {

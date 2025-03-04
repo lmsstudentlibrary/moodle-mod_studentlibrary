@@ -38,7 +38,10 @@ $modulenameplural = get_string('modulename', 'mod_studentlibrary');
 echo $OUTPUT->heading($modulenameplural);
 $studentlibrarys = get_all_instances_in_course('studentlibrary', $course);
 if (empty($studentlibrarys)) {
-    notice(get_string('nonewmodules', 'mod_studentlibrary'), new moodle_url('/course/view.php', ['id' => $course->id]));
+    notice(
+        get_string('studentlibrary:nonewmodules', 'mod_studentlibrary')
+        , new moodle_url('/course/view.php', ['id' => $course->id])
+    );
 }
 $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_index';
