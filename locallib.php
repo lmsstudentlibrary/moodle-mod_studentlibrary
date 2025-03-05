@@ -30,7 +30,8 @@
  * @return string Retutn context book page.
  */
 function get_lib_url($book) {
-    global $DB, $USER, $PAGE,  $SESSION;
+    global $CFG, $DB, $USER, $PAGE,  $SESSION;
+    require_once($CFG->dirroot.'/lib/filelib.php');
     if (!empty($SESSION->lang)) {
         if ($SESSION->lang !== null) {
             $lang = $SESSION->lang;
@@ -96,12 +97,8 @@ function get_lib_url($book) {
         $getaccesurl = $getaccesurl . '?' . 'SSr=' . $ssro . '&guide=session&cmd=solve&action=seamless_access&id=';
         $getaccesurl .= $USER->id . '&value.kit_id=' . $bookid;
         if ($getaccesurl != '') {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_URL, $getaccesurl);
-            // We get a session. Получаем сессию.
-            $rezxml = curl_exec($ch);
-            curl_close($ch);
+            $curl = new curl();
+            $rezxml = $curl->get($getaccesurl);
             $xml = simplexml_load_string($rezxml);
             $json = json_encode($xml);
             $array = json_decode($json, true);
@@ -139,17 +136,8 @@ function get_lib_url($book) {
             ];
         }
         if ($getaccesurl != '') {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $getaccesurl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($getaccesurloprions));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-type: application/json',
-                'Accept: application/json',
-            ]);
-            $ssrxml = curl_exec($ch);
-            curl_close($ch);
+            $curl = new curl();
+            $ssrxml = $curl->post($getaccesurl, $getaccesurloprions);
             $xml = simplexml_load_string($ssrxml);
             $json = json_encode($xml);
             $array = json_decode($json, true);
@@ -181,12 +169,8 @@ function buildbook($server, $ssr, $bookid, $url) {
         $bookid = getbookidbydocid($server, $ssr, explode("/", $bookid)[1]);
         $getsesionurl = $server . 'db?SSr=' . $ssr . '&guide=book&cmd=data&id=' . $bookid . '&img_src_form=b64&on_cdata=1';
     }
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $getsesionurl);
-    // We get a session. Получаем сессию.
-    $ssrxml = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl();
+    $ssrxml = $curl->get($getsesionurl);
     $xml = simplexml_load_string($ssrxml, null, LIBXML_NOCDATA);
     $json = json_encode($xml);
     $array = json_decode($json, true);
@@ -312,12 +296,8 @@ function buildbook($server, $ssr, $bookid, $url) {
 function getpublisher($ssr, $getpublisherurl, $server) {
     $getpublisherurl = $server . 'db?SSr=' . $ssr . '&guide=publishers&cmd=data&id=';
     $getpublisherurl .= $getpublisherurl . '&build_in_data=1&on_cdata=0';
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $getpublisherurl);
-    // We get a session. Получаем сессию.
-    $publisherxml = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl();
+    $publisherxml = $curl->get($getpublisherurl);
     $xml = simplexml_load_string($publisherxml);
     $json = json_encode($xml);
     $array = json_decode($json, true);
@@ -342,12 +322,8 @@ function getpublisher($ssr, $getpublisherurl, $server) {
  */
 function getbookidbydocid($server, $ssr, $bookid) {
     $masterbookdataurl = $server . 'db?SSr=' . $ssr . '&guide=doc&cmd=data&id=' . $bookid . '&tag=master_book_data';
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $masterbookdataurl);
-    // We get the book data by chapter. Получаем данные книги по главе.
-    $rezxmlstring = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl();
+    $rezxmlstring = $curl->get($masterbookdataurl);
     $xml = simplexml_load_string($rezxmlstring);
     $result = $xml->xpath('/doc/book');
     if (isset($result[0])) {
@@ -367,12 +343,8 @@ function getbookidbydocid($server, $ssr, $bookid) {
 function getssro($serverapi, $orgid, $agrid) {
     // We get the organization's session. Получаем сессию организации.
     $getsesionurl = $serverapi . "join?org_id=" . $orgid . "&agr_id=" . $agrid . "&app=plugin_moodle";
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $getsesionurl);
-    // We get a session. Получаем сессию.
-    $ssrxml = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl();
+    $ssrxml = $curl->get($getsesionurl);
     $xml = simplexml_load_string($ssrxml);
     $json = json_encode($xml);
     $array = json_decode($json, true);
@@ -393,12 +365,8 @@ function getssrp($serverapi, $ssro, $userid, $userlastname, $userfirstname) {
     // Getting the user's session. Получаем сессию пользователя.
     $getsesionurl = $serverapi . "db?SSr=" . $ssro . "&guide=session&cmd=solve&action=seamless_access&id=";
     $getsesionurl .= $userid . '&value.FamilyName.ru=' . $userlastname . '&value.NameAndFName.ru=' . $userfirstname;
-    $ch2 = curl_init();
-    curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch2, CURLOPT_URL, $getsesionurl);
-    // We get a session. Получаем сессию.
-    $ssrxml = curl_exec($ch2);
-    curl_close($ch2);
+    $curl = new curl();
+    $ssrxml = $curl->get($getsesionurl);
     $xml = simplexml_load_string($ssrxml);
     $json = json_encode($xml);
     $array = json_decode($json, true);
@@ -415,11 +383,8 @@ function getssrp($serverapi, $ssro, $userid, $userlastname, $userfirstname) {
 function getkitslist($serverapi, $ssrp) {
     // We get a set of books. Получаем список книг.
     $kitsurl = $serverapi . "db?SSr=" . $ssrp . "&guide=sengine&cmd=sel&tag=all_agreement_kits";
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $kitsurl);
-    $kitslistxml = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl();
+    $kitslistxml = $curl->get($kitsurl);
     $xml = simplexml_load_string($kitslistxml);
     $json = json_encode($xml);
     $array = json_decode($json, true);
@@ -444,11 +409,8 @@ function getkitslist($serverapi, $ssrp) {
 function buildswitchkit($server, $ssr, $kitid, $url, $lang) {
     // We get a set of books. Получаем список книг.
     $kitdataurl = $server . "db?SSr=" . $ssr . "&guide=sengine&cmd=sel&tag=kit_content&kit=" . $kitid;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $kitdataurl);
-    $kitdataxml = curl_exec($ch);
-    curl_close($ch);
+    $curl = new curl();
+    $kitdataxml = $curl->get($kitdataurl);
     $xml = simplexml_load_string($kitdataxml, null, LIBXML_NOCDATA);
     $kitname = '';
     if ($xml->xpath('/document/name/string[@language="' . $lang . '"]')) {
