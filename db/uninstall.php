@@ -29,7 +29,7 @@
 function xmldb_studentlibrary_uninstall() {
     global $CFG;
     require_once($CFG->libdir . '/filelib.php');
-    $ff = $CFG->studentlibraryfile;
+    $ff = get_config('mod_studentlibrary', 'studentlibraryfile');
     $fs = get_file_storage();
     $fileinfo = [
         'component' => 'core',

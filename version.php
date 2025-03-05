@@ -26,8 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_studentlibrary';
-$plugin->release = '1.0.2025030401';
-$plugin->version  = 2025030401;
+$plugin->release = '1.0.2025030500';
+$plugin->version  = 2025030500;
 $plugin->requires = 2019111800;
 $plugin->maturity = MATURITY_RC;
 $plugin->serverapi = 'https://gate22.studentlibrary.ru/';
