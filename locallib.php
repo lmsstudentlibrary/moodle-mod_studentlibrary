@@ -42,8 +42,8 @@ function get_lib_url($book) {
         $lang = 'ru';
     }
     $serverapi = get_mod_config('serverapi');
-    $orgid = $DB->get_record('config', ['name' => 'studentlibrary_idorg'])->value;
-    $agrid = $DB->get_record('config', ['name' => 'studentlibrary_norg'])->value;
+    $orgid = $CFG->studentlibrary_idorg;
+    $agrid = $CFG->studentlibrary_norg;
     if (substr($serverapi, -1) !== '/') {
         $serverapi = $serverapi . '/';
     }

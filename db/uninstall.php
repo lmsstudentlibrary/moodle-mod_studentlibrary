@@ -27,9 +27,9 @@
  * Custom code to be run on uninstalling the plugin.
  */
 function xmldb_studentlibrary_uninstall() {
-    global $DB, $CFG;
+    global $CFG;
     require_once($CFG->libdir . '/filelib.php');
-    $ff = $DB->get_record('config', ['name' => 'studentlibraryfile'])->value;
+    $ff = $CFG->studentlibraryfile;
     $fs = get_file_storage();
     $fileinfo = [
         'component' => 'core',
