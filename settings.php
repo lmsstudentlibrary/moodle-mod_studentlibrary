@@ -30,14 +30,14 @@ if ($ADMIN->fulltree) {
      require_once($CFG->dirroot . '/mod/studentlibrary/lib.php');
      $settings->add(
           new admin_setting_heading(
-               'studentlibraryhead',
+               'mod_studentlibrary/studentlibraryhead',
                get_string('studentlibrary:studentlibraryhead', 'mod_studentlibrary'),
                get_string('studentlibrary:studentlibraryhead_desc', 'mod_studentlibrary')
           )
      );
      $settings->add(
           new admin_setting_configtext(
-               'studentlibrary_idorg',
+               'mod_studentlibrary/studentlibrary_idorg',
                get_string('studentlibrary:idorg', 'mod_studentlibrary'),
                get_string('studentlibrary:idorg_desc', 'mod_studentlibrary'),
                '0000'
@@ -45,7 +45,7 @@ if ($ADMIN->fulltree) {
      );
      $settings->add(
           new admin_setting_configtext(
-               'studentlibrary_norg',
+               'mod_studentlibrary/studentlibrary_norg',
                get_string('studentlibrary:norg', 'mod_studentlibrary'),
                get_string('studentlibrary:norg_desc', 'mod_studentlibrary'),
                '0000'
