@@ -21,7 +21,13 @@
     {
         "titleh1": "titleh1",
         "chaptername": "chaptername",
-        "imghtml": "<img src='https://www.example.com/image.jpg' alt='book_img'>"
+        "imghtml": "<img src='https://www.example.com/image.jpg' alt='book_img'>",
+        "studentlibrary_authors": "Authors",
+        "authors": "authors",
+        "studentlibrary_publisher": "Publishing",
+        "publisher": => "publisher",
+        "studentlibrary_year": "The year of publishing",
+        "year": "2025",
     }
 }}
 
@@ -31,6 +37,17 @@
 		<div class="titleH2">{{chaptername}}</div>
         <div class="card-props">
 			<div class="cover">{{{imghtml}}}</div>
+			<div class="props-list">
+				<dl class="main-props">
+					<dt class="ng-star-inserted">{{studentlibrary_authors}}</dt>
+					<dd class="ng-star-inserted authors">{{authors}}</dd>
+					<dt class="ng-star-inserted">{{studentlibrary_publisher}}</dt>
+					<dd class="ng-star-inserted publisher">{{publisher}}</dd>
+					<dt class="ng-star-inserted">{{studentlibrary_year}}</dt>
+					<dd class="ng-star-inserted year">{{year}}</dd>	
+				</dl>
+				<div class="doc_name"></div>
+			</div>
 		</div>
 	</div>
 </div>
