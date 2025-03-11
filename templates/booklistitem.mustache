@@ -20,7 +20,8 @@
     Example context (json):
     {
         "titleh1": "titleh1",
-        "chaptername": "chaptername"
+        "chaptername": "chaptername",
+        "imghtml": "<img src='https://www.example.com/image.jpg' alt='book_img'>"
     }
 }}
 
@@ -28,5 +29,8 @@
 	<div class="card-content-detail-wrapper">
 		<div class="titleH1">{{titleh1}}</div>
 		<div class="titleH2">{{chaptername}}</div>
+        <div class="card-props">
+			<div class="cover">{{{imghtml}}}</div>
+		</div>
 	</div>
 </div>
