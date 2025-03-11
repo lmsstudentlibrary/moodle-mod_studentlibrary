@@ -1,11 +1,27 @@
 {{!
-   @template mod_studentlibrary/booklistitem
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_studentlibrary/booklistitem
 
     Example context (json):
     {
         "titleh1": "titleh1",
         "chaptername": "chaptername",
-        "imghtml": "<img src="https://www.example.com/image.jpg" alt="book_img">",
+        "imghtml": "<img src='https://www.example.com/image.jpg' alt="book_img">",
         "studentlibrary_authors": "Authors",
         "authors": "authors",
         "studentlibrary_publisher": "Publishing",
@@ -15,9 +31,10 @@
         "url": "https://www.example.com",
         "studentlibrary_read": "Read",
         "studentlibrary_annotation": "Annotation",
-        "annotation": "<p>annotation</p><p>annotation2</p>",
+        "annotation": "<p>annotation</p><p>annotation2</p>"
     }
 }}
+
 <div class="radio-card">
 	<div class="card-content-detail-wrapper">
 		<div class="titleH1">{{titleh1}}</div>
