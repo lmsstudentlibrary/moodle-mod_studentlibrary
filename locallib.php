@@ -236,7 +236,7 @@ function buildbook($server, $ssr, $bookid, $url) {
         $imgsrc = $array['meta']['attachments']['cash']['attach']['@attributes']['src'];
     }
 
-    
+    $titleH1 = '-';
     if ($xml->xpath('/book/title/string[@language="' . $SESSION->lang . '"]')) {
         $titleH1 = $xml->xpath('/book/title/string[@language="' . $SESSION->lang . '"]')[0];
     } else if ($xml->xpath('/book/title/string[@language="ru"]')) {
@@ -249,16 +249,16 @@ function buildbook($server, $ssr, $bookid, $url) {
         'titleH1' => $titleH1,
         'chaptername' => $chaptername,
         'imgsrc' => $imgsrc,
-        'studentlibrary_authors'=>get_string('studentlibrary:authors', 'mod_studentlibrary'),
-        'authors'=>$authors,
-        'studentlibrary_publisher'=>get_string('studentlibrary:publisher', 'mod_studentlibrary'),
-        'publisher'=>$publisher,
-        'studentlibrary_year'=>get_string('studentlibrary:year', 'mod_studentlibrary'),
-        'year'=>$year,
-        'url'=>$url,
-        'studentlibrary_read'=>get_string('studentlibrary:read', 'mod_studentlibrary'),
-        'studentlibrary_annotation'=>get_string('studentlibrary:annotation', 'mod_studentlibrary'),
-        'annotation'=> $annotation
+        'studentlibrary_authors' => get_string('studentlibrary:authors', 'mod_studentlibrary'),
+        'authors' => $authors,
+        'studentlibrary_publisher' => get_string('studentlibrary:publisher', 'mod_studentlibrary'),
+        'publisher' => $publisher,
+        'studentlibrary_year' => get_string('studentlibrary:year', 'mod_studentlibrary'),
+        'year' => $year,
+        'url' => $url,
+        'studentlibrary_read' => get_string('studentlibrary:read', 'mod_studentlibrary'),
+        'studentlibrary_annotation' => get_string('studentlibrary:annotation', 'mod_studentlibrary'),
+        'annotation' => $annotation
     ];
     $booklistitem = $OUTPUT->render_from_template('mod_studentlibrary/booklistitem', $booklistitemdata);
     return $booklistitem;
