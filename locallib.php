@@ -230,10 +230,10 @@ function buildbook($server, $ssr, $bookid, $url) {
         $chaptername .= ' ' . get_string('studentlibrary:page', 'mod_studentlibrary') . ' ' . explode("/", $bookid)[2];
     }
     $publisher = getpublisher($ssr, $publisher, $server);
-    
+
     if (isset($array['meta']['attachments']['cash']['attach'][0])) {
         $imgsrc = $array['meta']['attachments']['cash']['attach'][0]['@attributes']['src'];
-    } else if (isset($array['meta']['attachments']['cash']['attach']['@attributes']['src'])){
+    } else if (isset($array['meta']['attachments']['cash']['attach']['@attributes']['src'])) {
         $imgsrc = $array['meta']['attachments']['cash']['attach']['@attributes']['src'];
     } else {
         $imgsrc = '-';
