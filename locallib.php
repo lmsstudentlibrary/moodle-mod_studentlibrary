@@ -238,7 +238,7 @@ function buildbook($server, $ssr, $bookid, $url) {
     } else {
         $imgsrc = '-';
     }
-
+    $imghtml = '<img src="' . $imgsrc . '" alt="book_img">';
     $titleh1 = '-';
     if ($xml->xpath('/book/title/string[@language="' . $SESSION->lang . '"]')) {
         $titleh1 = $xml->xpath('/book/title/string[@language="' . $SESSION->lang . '"]')[0];
@@ -251,7 +251,7 @@ function buildbook($server, $ssr, $bookid, $url) {
     $booklistitemdata = [
         'titleh1' => $titleh1,
         'chaptername' => $chaptername,
-        'imgsrc' => $imgsrc,
+        'imghtml' => $imghtml,
         'studentlibrary_authors' => get_string('studentlibrary:authors', 'mod_studentlibrary'),
         'authors' => $authors,
         'studentlibrary_publisher' => get_string('studentlibrary:publisher', 'mod_studentlibrary'),
