@@ -159,7 +159,7 @@ function get_lib_url($book) {
  * @return string Retutn context book card.
  */
 function buildbook($server, $ssr, $bookid, $url) {
-    global $CFG, $SESSION;
+    global $CFG, $SESSION, $OUTPUT;
     require_once($CFG->dirroot . '/course/moodleform_mod.php');
     require_once(__DIR__ . '/lib.php');
     if (explode("/", $bookid)[0] === 'book') {
@@ -235,54 +235,32 @@ function buildbook($server, $ssr, $bookid, $url) {
     } else {
         $imgsrc = $array['meta']['attachments']['cash']['attach']['@attributes']['src'];
     }
-    $booklistitem = '';
-    $booklistitem .= '<label class="radio-card">';
-    $booklistitem .= '<div class="card-content-detail-wrapper">';
+
+    
     if ($xml->xpath('/book/title/string[@language="' . $SESSION->lang . '"]')) {
-        $booklistitem .= '<div class="titleH1">';
-        $booklistitem .= $xml->xpath('/book/title/string[@language="' . $SESSION->lang . '"]')[0] . '</div>';
+        $titleH1 = $xml->xpath('/book/title/string[@language="' . $SESSION->lang . '"]')[0];
     } else if ($xml->xpath('/book/title/string[@language="ru"]')) {
-        $booklistitem .= '<div class="titleH1">' . $xml->xpath('/book/title/string[@language="ru"]')[0] . '</div>';
+        $titleH1 = $xml->xpath('/book/title/string[@language="ru"]')[0];
     } else if ($xml->xpath('/book/title/string[@language="en"]')) {
-        $booklistitem .= '<div class="titleH1">' . $xml->xpath('/book/title/string[@language="en"]')[0] . '</div>';
+        $titleH1 = $xml->xpath('/book/title/string[@language="en"]')[0];
     }
-    $booklistitem .= '<div class="titleH2">' . $chaptername . '</div>';
-    $booklistitem .= '<div class="card-props">';
-    $booklistitem .= '<div class="cover">';
-    $booklistitem .= '<img src=' . $imgsrc . '></img>';
-    $booklistitem .= '</div>';
-    $booklistitem .= '<div class="props-list">';
-    $booklistitem .= '<dl class="main-props">';
-    $booklistitem .= '<dt class="ng-star-inserted">' . get_string('studentlibrary:authors', 'mod_studentlibrary');
-    $booklistitem .= ':</dt><dd class="ng-star-inserted authors">' . $authors . '</dd>';
-    $booklistitem .= '<dt class="ng-star-inserted">' . get_string('studentlibrary:publisher', 'mod_studentlibrary');
-    $booklistitem .= ':</dt><dd class="ng-star-inserted publisher">' . $publisher . '</dd>';
-    $booklistitem .= '<dt class="ng-star-inserted">' . get_string('studentlibrary:year', 'mod_studentlibrary');
-    $booklistitem .= ':</dt><dd class="ng-star-inserted year">' . $year . '</dd>';
-    $booklistitem .= '<dt class="ng-star-inserted"><div class="read_button"><a href="';
-    $booklistitem .= $url . '" target="_blank" class="btn btn-primary" >';
-    $booklistitem .= get_string('studentlibrary:read', 'mod_studentlibrary');
-    $booklistitem .= '</a></div></dt><dd class="ng-star-inserted"></dd>';
-    $booklistitem .= '</dl>';
-    $booklistitem .= '<div class="doc_name"></div>';
-    $booklistitem .= '</div>';
-    $booklistitem .= '<div class="annotation"><p class="annotation_title">';
-    $booklistitem .= get_string('studentlibrary:annotation', 'mod_studentlibrary') . ':</p>';
-    if ($annotation) {
-        if (isset($annotation['p'])) {
-            for ($p = 0; $p < count($annotation['p']); $p++) {
-                $booklistitem .= '<p>' . $annotation['p'][$p] . '</p>';
-            }
-        } else if (isset($annotation['div'])) {
-            $booklistitem .= '<div>' . $annotation['div'] . '</div>';
-        } else {
-            $booklistitem .= '<div>' . $annotation . '</div>';
-        }
-    }
-    $booklistitem .= '</div>';
-    $booklistitem .= '</div>';
-    $booklistitem .= '</div>';
-    $booklistitem .= '</label>';
+
+    $booklistitemdata = [
+        'titleH1' => $titleH1,
+        'chaptername' => $chaptername,
+        'imgsrc' => $imgsrc,
+        'studentlibrary_authors'=>get_string('studentlibrary:authors', 'mod_studentlibrary'),
+        'authors'=>$authors,
+        'studentlibrary_publisher'=>get_string('studentlibrary:publisher', 'mod_studentlibrary'),
+        'publisher'=>$publisher,
+        'studentlibrary_year'=>get_string('studentlibrary:year', 'mod_studentlibrary'),
+        'year'=>$year,
+        'url'=>$url,
+        'studentlibrary_read'=>get_string('studentlibrary:read', 'mod_studentlibrary'),
+        'studentlibrary_annotation'=>get_string('studentlibrary:annotation', 'mod_studentlibrary'),
+        'annotation'=> $annotation
+    ];
+    $booklistitem = $OUTPUT->render_from_template('mod_studentlibrary/booklistitem', $booklistitemdata);
     return $booklistitem;
 }
 
