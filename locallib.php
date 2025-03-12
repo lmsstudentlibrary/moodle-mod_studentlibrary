@@ -27,7 +27,7 @@
  * Viewing a book.
  *
  * @param string $book Book id.
- * @return string Retutn context book page.
+ * @return string|boolean Retutn context book page.
  */
 function get_lib_url($book) {
     global $CFG, $DB, $USER, $PAGE,  $SESSION;
@@ -156,7 +156,7 @@ function get_lib_url($book) {
  * @param string $ssr user ssr.
  * @param string $bookid Book id.
  * @param string $url api url.
- * @return string Retutn context book card.
+ * @return string|boolean	Retutn context book card.
  */
 function buildbook($server, $ssr, $bookid, $url) {
     global $CFG, $SESSION, $OUTPUT;
