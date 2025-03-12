@@ -35,5 +35,5 @@ $capabilities = [
             'manager' => CAP_ALLOW,
         ],
         'clonepermissionsfrom' => 'moodle/course:manageactivities',
-    ]
+    ],
 ];
