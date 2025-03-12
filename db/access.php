@@ -26,15 +26,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
-    'mod/studentlibrary:get_tree' => [
-        'riskbitmask'  => RISK_SPAM | RISK_PERSONAL,
-        'captype'      => 'read',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes'   => [
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW,
-        ],
-    ],
     'mod/studentlibrary:addinstance' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
@@ -44,14 +35,5 @@ $capabilities = [
             'manager' => CAP_ALLOW,
         ],
         'clonepermissionsfrom' => 'moodle/course:manageactivities',
-    ],
-    'mod/studentlibrary:get_constructor' => [
-        'riskbitmask' => RISK_SPAM | RISK_PERSONAL,
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW,
-        ],
-    ],
+    ]
 ];
