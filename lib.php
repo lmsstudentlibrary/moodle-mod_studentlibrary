@@ -27,7 +27,7 @@
  * Return if the plugin supports $feature.
  *
  * @param string $feature Constant representing the feature.
- * @return true | null True if the feature is supported, null otherwise.
+ * @return bool|null True if the feature is supported, null otherwise.
  */
 function studentlibrary_supports($feature) {
     switch ($feature) {
@@ -162,7 +162,7 @@ function studentlibrary_grade_item_update($moduleinstance, $reset = false) {
  * Delete grade item for given mod_studentlibrary instance.
  *
  * @param stdClass $moduleinstance Instance object.
- * @return grade_item.
+ * @return int grade_item.
  */
 function studentlibrary_grade_item_delete($moduleinstance) {
     global $CFG;
