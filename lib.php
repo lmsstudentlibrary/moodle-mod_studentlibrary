@@ -224,7 +224,7 @@ function studentlibrary_extend_settings_navigation($settingsnav,  $stnode) {
  * @param string $name .
  * @return string.
  */
-function get_mod_config($name) {
+function mod_studentlibrary_getmodconfig($name) {
     $plugin = new \stdClass();
     require(__DIR__ . '/version.php');
     return $plugin->$name;

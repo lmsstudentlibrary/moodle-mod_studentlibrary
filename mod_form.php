@@ -45,16 +45,16 @@ class mod_studentlibrary_mod_form extends moodleform_mod {
      */
     public function definition() {
         global $CFG, $PAGE, $USER, $SESSION;
-        $serverapi = get_mod_config('serverapi');
+        $serverapi = mod_studentlibrary_getmodconfig('serverapi');
         $orgid = get_config('mod_studentlibrary', 'studentlibrary_idorg');
         $agrid = get_config('mod_studentlibrary', 'studentlibrary_norg');
         if (substr($serverapi, -1) !== '/') {
             $serverapi = $serverapi . '/';
         }
         // We get the organization's session. Получаем сессию организации.
-        $ssro = getssro($serverapi, $orgid, $agrid);
+        $ssro = mod_studentlibrary_getssro($serverapi, $orgid, $agrid);
         // Getting the user's session. Получаем сессию пользователя.
-        $ssrp = getssrp(
+        $ssrp = mod_studentlibrary_getssrp(
             $serverapi,
             $ssro,
             $USER->id,
@@ -62,7 +62,7 @@ class mod_studentlibrary_mod_form extends moodleform_mod {
             str_replace(' ', '_', $USER->firstname)
         );
         // We get a set of books. Получаем набор книг.
-        $kitslist = getkitslist($serverapi, $ssrp);
+        $kitslist = mod_studentlibrary_getkitslist($serverapi, $ssrp);
         $mform = $this->_form;
         $mform->addElement('header', 'general', get_string('general', 'form'));
         $mform->addElement('text', 'name', "Название", ['size' => '64']);

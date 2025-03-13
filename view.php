@@ -46,6 +46,6 @@ $PAGE->set_context($modulecontext);
 $PAGE->requires->css('/mod/studentlibrary/css/style.css');
 echo $OUTPUT->header();
 $content = $moduleinstance->intro . "<br>";
-$content .= get_lib_url($moduleinstance->booke, $moduleinstance->ised);
+$content .= mod_studentlibrary_getliburl($moduleinstance->booke, $moduleinstance->ised);
 echo $OUTPUT->box($content, "generalbox center clearfix");
 echo $OUTPUT->footer();
