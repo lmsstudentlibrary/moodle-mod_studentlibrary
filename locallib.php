@@ -80,7 +80,13 @@ function mod_studentlibrary_getliburl($book) {
         $DB->delete_records_select($table, $select, $param);
     }
     // Getting the user's session. Получаем сессию пользователя.
-    $ssrp = mod_studentlibrary_getssrp($serverapi, $ssro, $USER->id, str_replace(' ', '_', $USER->lastname), str_replace(' ', '_', $USER->firstname));
+    $ssrp = mod_studentlibrary_getssrp(
+        $serverapi
+        , $ssro
+        , $USER->id
+        , str_replace(' ', '_', $USER->lastname)
+        , str_replace(' ', '_', $USER->firstname)
+    );
     if (strtolower(explode("/", $book)[0]) === 'switch_kit') {
         // We get a link to the Kit. Получаем ссылку на Комплект.
         $getaccesurl = '';
