@@ -29,7 +29,7 @@
  * @param string $book Book id.
  * @return string|boolean Retutn context book page.
  */
-function get_lib_url($book) {
+function mod_studentlibrary_getliburl($book) {
     global $CFG, $DB, $USER, $PAGE,  $SESSION;
     require_once($CFG->dirroot.'/lib/filelib.php');
     if (!empty($SESSION->lang)) {
@@ -41,14 +41,14 @@ function get_lib_url($book) {
     } else {
         $lang = 'ru';
     }
-    $serverapi = get_mod_config('serverapi');
+    $serverapi = mod_studentlibrary_getmodconfig('serverapi');
     $orgid = get_config('mod_studentlibrary', 'studentlibrary_idorg');
     $agrid = get_config('mod_studentlibrary', 'studentlibrary_norg');
     if (substr($serverapi, -1) !== '/') {
         $serverapi = $serverapi . '/';
     }
     // We get the organization's session. Получаем сессию организации.
-    $ssro = getssro($serverapi, $orgid, $agrid);
+    $ssro = mod_studentlibrary_getssro($serverapi, $orgid, $agrid);
     $url = $PAGE->url;
     $scheme = $url->get_scheme();
     $host = $url->get_host();
@@ -80,7 +80,7 @@ function get_lib_url($book) {
         $DB->delete_records_select($table, $select, $param);
     }
     // Getting the user's session. Получаем сессию пользователя.
-    $ssrp = getssrp($serverapi, $ssro, $USER->id, str_replace(' ', '_', $USER->lastname), str_replace(' ', '_', $USER->firstname));
+    $ssrp = mod_studentlibrary_getssrp($serverapi, $ssro, $USER->id, str_replace(' ', '_', $USER->lastname), str_replace(' ', '_', $USER->firstname));
     if (strtolower(explode("/", $book)[0]) === 'switch_kit') {
         // We get a link to the Kit. Получаем ссылку на Комплект.
         $getaccesurl = '';
@@ -102,7 +102,7 @@ function get_lib_url($book) {
             $xml = simplexml_load_string($rezxml);
             $json = json_encode($xml);
             $array = json_decode($json, true);
-            $bookitem = buildswitchkit($serverapi, $ssro, $bookid, $array["url"], $lang);
+            $bookitem = mod_studentlibrary_buildswitchkit($serverapi, $ssro, $bookid, $array["url"], $lang);
         }
     } else {
         // We get a link to the book. Получаем ссылку на книгу.
@@ -144,7 +144,7 @@ function get_lib_url($book) {
             $url = $array["url"];
             $DB->insert_record('studentlibrary_apikey', $result, false); /* записываем ключ */
         }
-        $bookitem = buildbook($serverapi,  $ssrp, $book, $url);
+        $bookitem = mod_studentlibrary_buildbook($serverapi,  $ssrp, $book, $url);
     }
     return $bookitem;
 }
@@ -158,7 +158,7 @@ function get_lib_url($book) {
  * @param string $url api url.
  * @return string|boolean Retutn context book card.
  */
-function buildbook($server, $ssr, $bookid, $url) {
+function mod_studentlibrary_buildbook($server, $ssr, $bookid, $url) {
     global $CFG, $SESSION, $OUTPUT;
     require_once($CFG->dirroot . '/course/moodleform_mod.php');
     require_once(__DIR__ . '/lib.php');
@@ -166,7 +166,7 @@ function buildbook($server, $ssr, $bookid, $url) {
         $bookid = explode("/", $bookid)[1];
         $getsesionurl = $server . 'db?SSr=' . $ssr . '&guide=book&cmd=data&id=' . $bookid . '&img_src_form=b64&on_cdata=1';
     } else if (explode("/", $bookid)[0] === 'doc') {
-        $bookid = getbookidbydocid($server, $ssr, explode("/", $bookid)[1]);
+        $bookid = mod_studentlibrary_getbookidbydocid($server, $ssr, explode("/", $bookid)[1]);
         $getsesionurl = $server . 'db?SSr=' . $ssr . '&guide=book&cmd=data&id=' . $bookid . '&img_src_form=b64&on_cdata=1';
     }
     $curl = new curl();
@@ -229,7 +229,7 @@ function buildbook($server, $ssr, $bookid, $url) {
     if ($chaptername !== '') {
         $chaptername .= ' ' . get_string('studentlibrary:page', 'mod_studentlibrary') . ' ' . explode("/", $bookid)[2];
     }
-    $publisher = getpublisher($ssr, $publisher, $server);
+    $publisher = mod_studentlibrary_getpublisher($ssr, $publisher, $server);
 
     if (isset($array['meta']['attachments']['cash']['attach'][0])) {
         $imgsrc = $array['meta']['attachments']['cash']['attach'][0]['@attributes']['src'];
@@ -274,7 +274,7 @@ function buildbook($server, $ssr, $bookid, $url) {
  * @param string $server server url.
  * @return string Retutn publishers name.
  */
-function getpublisher($ssr, $getpublisherurl, $server) {
+function mod_studentlibrary_getpublisher($ssr, $getpublisherurl, $server) {
     $getpublisherurl = $server . 'db?SSr=' . $ssr . '&guide=publishers&cmd=data&id=';
     $getpublisherurl .= $getpublisherurl . '&build_in_data=1&on_cdata=0';
     $curl = new curl();
@@ -301,7 +301,7 @@ function getpublisher($ssr, $getpublisherurl, $server) {
  * @param string $server server url.
  * @return string Retutn publishers name.
  */
-function getbookidbydocid($server, $ssr, $bookid) {
+function mod_studentlibrary_getbookidbydocid($server, $ssr, $bookid) {
     $masterbookdataurl = $server . 'db?SSr=' . $ssr . '&guide=doc&cmd=data&id=' . $bookid . '&tag=master_book_data';
     $curl = new curl();
     $rezxmlstring = $curl->get($masterbookdataurl);
@@ -321,7 +321,7 @@ function getbookidbydocid($server, $ssr, $bookid) {
  * @param string $serverapi server url.
  * @return string Retutn organization session id.
  */
-function getssro($serverapi, $orgid, $agrid) {
+function mod_studentlibrary_getssro($serverapi, $orgid, $agrid) {
     // We get the organization's session. Получаем сессию организации.
     $getsesionurl = $serverapi . "join?org_id=" . $orgid . "&agr_id=" . $agrid . "&app=plugin_moodle";
     $curl = new curl();
@@ -342,7 +342,7 @@ function getssro($serverapi, $orgid, $agrid) {
  * @param string $userfirstname userfirstname.
  * @return string Retutn personal session id.
  */
-function getssrp($serverapi, $ssro, $userid, $userlastname, $userfirstname) {
+function mod_studentlibrary_getssrp($serverapi, $ssro, $userid, $userlastname, $userfirstname) {
     // Getting the user's session. Получаем сессию пользователя.
     $getsesionurl = $serverapi . "db?SSr=" . $ssro . "&guide=session&cmd=solve&action=seamless_access&id=";
     $getsesionurl .= $userid . '&value.FamilyName.ru=' . $userlastname . '&value.NameAndFName.ru=' . $userfirstname;
@@ -361,7 +361,7 @@ function getssrp($serverapi, $ssro, $userid, $userlastname, $userfirstname) {
  * @param string $ssrp ssrp.
  * @return array Retutn kits list.
  */
-function getkitslist($serverapi, $ssrp) {
+function mod_studentlibrary_getkitslist($serverapi, $ssrp) {
     // We get a set of books. Получаем список книг.
     $kitsurl = $serverapi . "db?SSr=" . $ssrp . "&guide=sengine&cmd=sel&tag=all_agreement_kits";
     $curl = new curl();
@@ -387,7 +387,7 @@ function getkitslist($serverapi, $ssrp) {
  * @param string $lang lang.
  * @return string Retutn switch kit.
  */
-function buildswitchkit($server, $ssr, $kitid, $url, $lang) {
+function mod_studentlibrary_buildswitchkit($server, $ssr, $kitid, $url, $lang) {
     // We get a set of books. Получаем список книг.
     $kitdataurl = $server . "db?SSr=" . $ssr . "&guide=sengine&cmd=sel&tag=kit_content&kit=" . $kitid;
     $curl = new curl();
