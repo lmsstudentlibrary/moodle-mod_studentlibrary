@@ -1,14 +1,3 @@
-.container {
-  display: grid;
-  grid-template-columns: min-content 5fr;
-  grid-template-rows: 2fr;
-  grid-auto-rows: 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-  ". .";
-}
-
 .i2 {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -42,11 +31,7 @@
   width: 100%;
 }
 
-.moodle-dialogue-base .moodle-dialogue-wrap {
-  border-radius: 15px;
-}
-
-.moodle-dialogue-base .moodle-dialogue .moodle-dialogue-bd {
+.book-dialog {
   padding: 1rem 1rem;
 }
 
